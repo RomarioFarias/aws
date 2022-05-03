@@ -1,0 +1,9 @@
+spring:
+  application:
+    name: ${APPLICATIONS_MS_NAME:@project.name@}
+  data:
+    mongodb:
+      uri: ${MONGO_URI:mongodb://root:root@localhost/aws-db?authSource=admin&retryWrites=false&w=majority&sslInvalidHostNameAllowed=true&ssl=false}
+      auto-index-creation: true
+
+
