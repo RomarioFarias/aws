@@ -1,4 +1,4 @@
-package br.com.siecola.aws_project.applications.exception;
+package br.com.siecola.aws_project.adapter.outbound.i18;
 
 public enum MessageProperties {
     API_FIELDS_INVALID,

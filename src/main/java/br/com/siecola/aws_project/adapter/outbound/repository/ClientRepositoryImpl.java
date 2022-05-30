@@ -5,6 +5,9 @@ import br.com.siecola.aws_project.applications.port.ClientRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Component;
 
+import java.util.Optional;
+import java.util.UUID;
+
 @Component
 @AllArgsConstructor
 public class ClientRepositoryImpl implements ClientRepository {
@@ -13,6 +16,12 @@ public class ClientRepositoryImpl implements ClientRepository {
 
     @Override
     public Client createClient(Client client) {
+        client.setId(UUID.randomUUID().toString());
         return clientMongoRepository.save(client);
+    }
+
+    @Override
+    public Optional<Client> getClient(String id) {
+        return clientMongoRepository.findById(id);
     }
 }

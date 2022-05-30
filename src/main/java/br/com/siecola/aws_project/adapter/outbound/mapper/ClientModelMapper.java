@@ -13,4 +13,8 @@ public class ClientModelMapper {
         return modelMapper.map(clientDto, Client.class);
     }
 
+    public ClientDto getClientDto(Client client) {
+        return modelMapper.map(client, ClientDto.class);
+    }
+
 }

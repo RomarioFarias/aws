@@ -1,10 +1,10 @@
 package br.com.siecola.aws_project.adapter.outbound.handle;
 
 
-import br.com.siecola.aws_project.applications.exception.ErrorData;
-import br.com.siecola.aws_project.applications.exception.ErrorResponse;
-import br.com.siecola.aws_project.applications.exception.Message;
-import br.com.siecola.aws_project.applications.exception.MessageProperties;
+import br.com.siecola.aws_project.adapter.inbound.dto.ErrorData;
+import br.com.siecola.aws_project.adapter.inbound.dto.ErrorDto;
+import br.com.siecola.aws_project.adapter.outbound.i18.Message;
+import br.com.siecola.aws_project.adapter.outbound.i18.MessageProperties;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.TypeMismatchException;
@@ -39,7 +39,7 @@ public class ApiExceptionHandler extends ResponseEntityExceptionHandler {
 
     @Override
     protected ResponseEntity<Object> handleTypeMismatch(TypeMismatchException ex, HttpHeaders headers, HttpStatus status, WebRequest request) {
-        ErrorResponse body = new ErrorResponse()
+        ErrorDto body = new ErrorDto()
                 .withCode(MessageProperties.API_FIELDS_INVALID.toString())
                 .withMessage(messageService.get(ex.getMessage()))
                 .withTimestamp(Instant.now());
@@ -48,7 +48,7 @@ public class ApiExceptionHandler extends ResponseEntityExceptionHandler {
 
     @Override
     protected ResponseEntity<Object> handleMethodArgumentNotValid(MethodArgumentNotValidException ex, HttpHeaders headers, HttpStatus status, WebRequest request) {
-        ErrorResponse body = new ErrorResponse()
+        ErrorDto body = new ErrorDto()
                 .withCode(MessageProperties.API_FIELDS_INVALID.toString())
                 .withMessage(messageService.get(MessageProperties.API_FIELDS_INVALID))
                 .withTimestamp(Instant.now());
@@ -60,7 +60,7 @@ public class ApiExceptionHandler extends ResponseEntityExceptionHandler {
 
     @Override
     protected ResponseEntity<Object> handleBindException(BindException ex, HttpHeaders headers, HttpStatus status, WebRequest request) {
-        ErrorResponse body = new ErrorResponse()
+        ErrorDto body = new ErrorDto()
                 .withCode(MessageProperties.API_FIELDS_INVALID.toString())
                 .withMessage(messageService.get(MessageProperties.API_FIELDS_INVALID))
                 .withTimestamp(Instant.now());
@@ -71,7 +71,7 @@ public class ApiExceptionHandler extends ResponseEntityExceptionHandler {
 
     @Override
     protected ResponseEntity<Object> handleHttpMessageNotReadable(HttpMessageNotReadableException ex, HttpHeaders headers, HttpStatus status, WebRequest request) {
-        ErrorResponse body = new ErrorResponse()
+        ErrorDto body = new ErrorDto()
                 .withCode(MessageProperties.API_BODY_INVALID.toString())
                 .withMessage(messageService.get(MessageProperties.API_BODY_INVALID))
                 .withTimestamp(Instant.now());
@@ -81,7 +81,7 @@ public class ApiExceptionHandler extends ResponseEntityExceptionHandler {
 
     @ExceptionHandler(value = {Exception.class})
     public ResponseEntity<Object> internalServerErrorExceptionHandler(Exception ex, WebRequest request) {
-        ErrorResponse body = new ErrorResponse()
+        ErrorDto body = new ErrorDto()
                 .withCode(MessageProperties.INTERNAL_SERVER_ERROR.toString())
                 .withMessage(messageService.get(MessageProperties.INTERNAL_SERVER_ERROR))
                 .withTimestamp(Instant.now());
@@ -93,7 +93,7 @@ public class ApiExceptionHandler extends ResponseEntityExceptionHandler {
 
     @ExceptionHandler(value = {ConstraintViolationException.class})
     public ResponseEntity<Object> handleConstraintViolation(ConstraintViolationException ex, WebRequest request) {
-        ErrorResponse body = new ErrorResponse()
+        ErrorDto body = new ErrorDto()
                 .withMessage(messageService.get(MessageProperties.API_FIELDS_INVALID))
                 .withCode(MessageProperties.API_FIELDS_INVALID.toString())
                 .withTimestamp(Instant.now());
@@ -112,7 +112,7 @@ public class ApiExceptionHandler extends ResponseEntityExceptionHandler {
 //        return handleExceptionInternal(ex, body, new HttpHeaders(), ex.getHttpStatus(), request);
 //    }
 
-    private List<ErrorData> populateErrors(ErrorResponse response, BindingResult bindingResult) {
+    private List<ErrorData> populateErrors(ErrorDto response, BindingResult bindingResult) {
         List<ErrorData> errorsList = new ArrayList<>();
 
         for (FieldError fieldError : bindingResult.getFieldErrors()) {
@@ -128,7 +128,7 @@ public class ApiExceptionHandler extends ResponseEntityExceptionHandler {
         return errorsList;
     }
 
-    private List<ErrorData> populateErrors(ErrorResponse response, Set<ConstraintViolation<?>> errors) {
+    private List<ErrorData> populateErrors(ErrorDto response, Set<ConstraintViolation<?>> errors) {
         List<ErrorData> errorsList = new ArrayList<ErrorData>();
 
         for (ConstraintViolation<?> fieldError : errors) {
