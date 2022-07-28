@@ -1,11 +1,7 @@
 package br.com.aws_project.adapter.inbound.controller;
 
-import br.com.aws_project.adapter.outbound.mapper.ClientModelMapper;
 import br.com.aws_project.adapter.outbound.mapper.ProductModelMapper;
 import br.com.aws_project.applications.port.ProductService;
-import br.com.aws_project.applications.port.ProviderService;
-import br.com.aws_project.templates.ClientTemplatTest;
-import br.com.aws_project.templates.ProductTemplatTest;
 import br.com.aws_project.utils.JsonMapper;
 import lombok.RequiredArgsConstructor;
 import org.junit.jupiter.api.Test;
@@ -21,10 +17,12 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.web.servlet.MockMvc;
 
+import static br.com.aws_project.templates.ProductTemplatTest.ID;
 import static br.com.aws_project.templates.ProductTemplatTest.getProducTemplat;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
 import static org.springframework.http.MediaType.APPLICATION_JSON;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
@@ -66,5 +64,15 @@ class ProductControllerTest {
                 .andExpect(jsonPath("$.value").value(2.222));
 
         verify(productService, times(1)).createProduct(any());
+    }
+
+    @Test
+    void getProductFindById() throws Exception {
+        when(productService.findProductById(any())).thenReturn(getProducTemplat());
+        var url = URL+"/{id}";
+        this.mockMvc.perform(get(url,ID)
+                .contentType(APPLICATION_JSON))
+                .andDo(print())
+                .andExpect(jsonPath("$.value").value(2.222));
     }
 }

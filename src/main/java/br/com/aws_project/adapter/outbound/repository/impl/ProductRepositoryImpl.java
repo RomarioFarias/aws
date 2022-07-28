@@ -6,6 +6,8 @@ import br.com.aws_project.applications.port.ProductRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Component;
 
+import java.util.Optional;
+
 @Component
 @AllArgsConstructor
 public class ProductRepositoryImpl implements ProductRepository {
@@ -16,5 +18,10 @@ public class ProductRepositoryImpl implements ProductRepository {
     @Override
     public Product createProduct(Product product) {
         return productMongoRepository.save(product);
+    }
+
+    @Override
+    public Optional<Product> findProductById(String productId) {
+        return productMongoRepository.findProductById(productId);
     }
 }

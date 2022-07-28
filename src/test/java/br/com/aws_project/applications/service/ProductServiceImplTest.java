@@ -9,7 +9,7 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
-import static br.com.aws_project.templates.ProductTemplatTest.getProducTemplat;
+import static br.com.aws_project.templates.ProductTemplatTest.*;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
 
@@ -35,6 +35,16 @@ class ProductServiceImplTest {
 
         Assertions.assertNotNull(product);
         verify(productRepository, times(1)).createProduct(any());
+
+    }
+
+    @Test
+    void findProducById() {
+        when(productRepository.findProductById(any())).thenReturn(getOptinalProduct());
+        var product = productServiceImpl.findProductById(ID);
+
+        Assertions.assertNotNull(product);
+        verify(productRepository, times(1)).findProductById(any());
 
     }
 }

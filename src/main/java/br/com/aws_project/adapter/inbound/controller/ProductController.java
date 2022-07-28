@@ -22,4 +22,10 @@ public class ProductController {
         return productModelMapper.toProductDto(product);
     }
 
+    @GetMapping("/{productId}")
+    ProductDto getProduct(@PathVariable String productId){
+        var product = productService.findProductById(productId);
+        return productModelMapper.toProductDto(product);
+    }
+
 }

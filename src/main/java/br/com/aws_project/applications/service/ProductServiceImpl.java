@@ -2,8 +2,8 @@ package br.com.aws_project.applications.service;
 
 
 import br.com.aws_project.applications.entity.Product;
-import br.com.aws_project.applications.entity.Provider;
-import br.com.aws_project.applications.port.ClientRepository;
+import br.com.aws_project.applications.enumeration.ExceptionCode;
+import br.com.aws_project.applications.exception.ResourceNotFoundException;
 import br.com.aws_project.applications.port.ProductRepository;
 import br.com.aws_project.applications.port.ProductService;
 import br.com.aws_project.applications.port.ProviderService;
@@ -28,6 +28,11 @@ public class ProductServiceImpl implements ProductService {
 
         product.setId(UUID.randomUUID().toString());
         return productRepository.createProduct(product);
+    }
+
+    @Override
+    public Product findProductById(String productId) {
+        return productRepository.findProductById(productId).orElseThrow(()-> new ResourceNotFoundException(ExceptionCode.PRODUCT_NOT_FOUND, productId));
     }
 
     private void validProvider(String providerId){
