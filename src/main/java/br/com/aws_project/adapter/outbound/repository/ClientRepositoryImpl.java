@@ -23,4 +23,9 @@ public class ClientRepositoryImpl implements ClientRepository {
     public Optional<Client> getClient(String id) {
         return clientMongoRepository.findClientById(id);
     }
+
+    @Override
+    public void deleteClientById(Client client) {
+        clientMongoRepository.delete(client);
+    }
 }

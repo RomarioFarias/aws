@@ -38,4 +38,10 @@ class ClientRepositoryImplTest {
     clientRepositoryImpl.getClient(ID);
     verify(clientMongoRepository, times(1)).findClientById(any());
   }
+
+  @Test
+  void deleteClient() {
+    clientRepositoryImpl.deleteClientById(getClientTemplat());
+    verify(clientMongoRepository, times(1)).delete(any());
+  }
 }
