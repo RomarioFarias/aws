@@ -1,11 +1,15 @@
 package br.com.aws_project.adapter.inbound.dto;
 
+import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.hibernate.validator.constraints.br.CPF;
 
 @Setter
 @Getter
+@AllArgsConstructor
+@NoArgsConstructor
 public class ClientDto {
 
     private String id;

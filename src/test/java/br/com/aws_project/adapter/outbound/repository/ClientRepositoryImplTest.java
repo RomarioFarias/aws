@@ -6,8 +6,7 @@ import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 
-import static br.com.aws_project.templates.ClientTemplatTest.ID;
-import static br.com.aws_project.templates.ClientTemplatTest.getOptionalClientTemplat;
+import static br.com.aws_project.templates.ClientTemplatTest.*;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.times;
@@ -27,7 +26,11 @@ class ClientRepositoryImplTest {
   }
 
   @Test
-  void createClient() {}
+  void createClient() {
+    when(clientMongoRepository.save(any())).thenReturn(getClientTemplat());
+    clientMongoRepository.save(getClientTemplat());
+    verify(clientMongoRepository, times(1)).save(any());
+  }
 
   @Test
   void getClient() {

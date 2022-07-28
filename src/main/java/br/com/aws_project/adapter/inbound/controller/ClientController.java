@@ -1,15 +1,11 @@
 package br.com.aws_project.adapter.inbound.controller;
 
-import br.com.aws_project.adapter.outbound.mapper.ClientModelMapper;
 import br.com.aws_project.adapter.inbound.dto.ClientDto;
+import br.com.aws_project.adapter.outbound.mapper.ClientModelMapper;
 import br.com.aws_project.applications.port.ClientService;
 import lombok.AllArgsConstructor;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.HttpStatus;
+import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 
@@ -22,14 +18,17 @@ public class ClientController {
     private ClientModelMapper clientModelMapper;
 
     @PostMapping()
+    @ResponseStatus(HttpStatus.CREATED)
     public ClientDto createClient(@RequestBody @Valid ClientDto clientDto) {
-        clientService.createClient(clientModelMapper.getClient(clientDto));
-        return null;
+        var client = clientService.createClient(clientModelMapper.toClient(clientDto));
+        return clientModelMapper.toClientDto(client);
     }
 
     @GetMapping("/{id}")
     public ClientDto getClient(@PathVariable String id) {
         var client = clientService.getClient(id);
-        return clientModelMapper.getClientDto(client);
+        return clientModelMapper.toClientDto(client);
     }
+
+
 }

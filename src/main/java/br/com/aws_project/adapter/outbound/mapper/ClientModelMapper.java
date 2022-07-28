@@ -9,12 +9,14 @@ import org.modelmapper.ModelMapper;
 public class ClientModelMapper {
     private ModelMapper modelMapper;
 
-    public Client getClient(ClientDto clientDto) {
+    public Client toClient(ClientDto clientDto) {
         return modelMapper.map(clientDto, Client.class);
     }
 
-    public ClientDto getClientDto(Client client) {
+    public ClientDto toClientDto(Client client) {
         return modelMapper.map(client, ClientDto.class);
     }
+
+
 
 }

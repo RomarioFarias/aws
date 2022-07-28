@@ -6,4 +6,16 @@ spring:
       uri: ${MONGO_URI:mongodb://root:root@localhost/aws-db?authSource=admin&retryWrites=false&w=majority&sslInvalidHostNameAllowed=true&ssl=false}
       auto-index-creation: true
 
-
+cloud:
+  aws:
+    stack:
+      auto: false
+    credentials:
+      access-key: ${AWS_ACCESS_KEY:localstack}
+      secret-key: ${AWS_SECRET_KEY:localstack}
+    region:
+      static: ${AWS_REGION:us-east-1}
+    sns:
+      topic:
+        t-client-delete-requested: ${T_MEDIA_DELETION_REQUESTED:t-client-delete-requested}
+      endpoint: ${AWS_SQS_POINT_URL:http://localhost:4566/} #APENAS PARA RODAR LOCAL NO LOCALSTACK
