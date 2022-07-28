@@ -1,7 +1,7 @@
 package br.com.aws_project.adapter.outbound.mapper;
 
 import br.com.aws_project.adapter.inbound.dto.ClientDto;
-import br.com.aws_project.applications.entity.Client;
+import br.com.aws_project.applications.entity.Provider;
 import lombok.AllArgsConstructor;
 import org.modelmapper.ModelMapper;
 
@@ -9,12 +9,12 @@ import org.modelmapper.ModelMapper;
 public class ClientModelMapper {
     private ModelMapper modelMapper;
 
-    public Client toClient(ClientDto clientDto) {
-        return modelMapper.map(clientDto, Client.class);
+    public Provider toClient(ClientDto clientDto) {
+        return modelMapper.map(clientDto, Provider.class);
     }
 
-    public ClientDto toClientDto(Client client) {
-        return modelMapper.map(client, ClientDto.class);
+    public ClientDto toClientDto(Provider provider) {
+        return modelMapper.map(provider, ClientDto.class);
     }
 
 

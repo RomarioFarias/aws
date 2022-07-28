@@ -1,9 +1,10 @@
 package br.com.aws_project.adapter.config;
 
 import br.com.aws_project.adapter.outbound.mapper.ClientModelMapper;
-import br.com.aws_project.applications.port.ClientRepository;
-import br.com.aws_project.applications.port.ClientSnsEvent;
-import br.com.aws_project.applications.service.ClientServiceImpl;
+import br.com.aws_project.adapter.outbound.mapper.ProductModelMapper;
+import br.com.aws_project.applications.port.*;
+import br.com.aws_project.applications.service.ProductServiceImpl;
+import br.com.aws_project.applications.service.ProviderServiceImpl;
 import org.modelmapper.ModelMapper;
 import org.springframework.context.MessageSource;
 import org.springframework.context.annotation.Bean;
@@ -12,7 +13,7 @@ import org.springframework.context.support.ReloadableResourceBundleMessageSource
 import org.springframework.validation.beanvalidation.LocalValidatorFactoryBean;
 
 @Configuration
-public class Config {
+public class ConfigBean {
 
     @Bean
     ModelMapper modelMapper() {
@@ -20,8 +21,8 @@ public class Config {
     }
 
     @Bean
-    ClientServiceImpl clientServiceImpl(ClientRepository clientRepository, ClientSnsEvent clientSnsEvent) {
-        return new ClientServiceImpl(clientRepository, clientSnsEvent);
+    ProviderServiceImpl clientServiceImpl(ClientRepository clientRepository, ClientSnsEvent clientSnsEvent) {
+        return new ProviderServiceImpl(clientRepository, clientSnsEvent);
     }
 
     @Bean
@@ -29,6 +30,15 @@ public class Config {
         return new ClientModelMapper(modelMapper);
     }
 
+    @Bean
+    ProductModelMapper productModelMapper(ModelMapper modelMapper){
+        return new ProductModelMapper(modelMapper);
+    }
+
+    @Bean
+    ProductServiceImpl productServiceImpl(ProductRepository productRepository, ProviderService providerService){
+        return new ProductServiceImpl(productRepository, providerService);
+    }
     @Bean
     public MessageSource messageSource() {
         ReloadableResourceBundleMessageSource messageSource

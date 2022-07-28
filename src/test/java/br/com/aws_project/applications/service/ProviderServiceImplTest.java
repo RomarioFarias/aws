@@ -21,10 +21,10 @@ import static org.mockito.Mockito.when;
 import static org.springframework.test.util.AssertionErrors.assertNotNull;
 import static org.springframework.test.util.AssertionErrors.assertTrue;
 
-class ClientServiceImplTest {
+class ProviderServiceImplTest {
 
     @InjectMocks
-    ClientServiceImpl clienteServiceImpl;
+    ProviderServiceImpl clienteServiceImpl;
 
     @Mock
     ClientRepository clientRepository;

@@ -1,8 +1,11 @@
 package br.com.aws_project.adapter.inbound.controller;
 
 import br.com.aws_project.adapter.outbound.mapper.ClientModelMapper;
+import br.com.aws_project.adapter.outbound.mapper.ProductModelMapper;
+import br.com.aws_project.applications.port.ProductService;
+import br.com.aws_project.applications.port.ProviderService;
 import br.com.aws_project.templates.ClientTemplatTest;
-import br.com.aws_project.applications.port.ClientService;
+import br.com.aws_project.templates.ProductTemplatTest;
 import br.com.aws_project.utils.JsonMapper;
 import lombok.RequiredArgsConstructor;
 import org.junit.jupiter.api.Test;
@@ -15,18 +18,17 @@ import org.springframework.boot.autoconfigure.mongo.MongoAutoConfiguration;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
-import org.springframework.http.MediaType;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.web.servlet.MockMvc;
 
+import static br.com.aws_project.templates.ProductTemplatTest.getProducTemplat;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
 import static org.springframework.http.MediaType.APPLICATION_JSON;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
-
 @EnableAutoConfiguration(
         exclude = {
                 MongoAutoConfiguration.class,
@@ -35,62 +37,34 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
         })
 @AutoConfigureMockMvc
 @RequiredArgsConstructor
-@SpringBootTest(classes = ClientController.class)
+@SpringBootTest(classes = ProductController.class)
 @ContextConfiguration(
         classes = {
                 ModelMapper.class,
-                ClientModelMapper.class
+                ProductModelMapper.class
         })
-class ClientControllerTest {
+class ProductControllerTest {
 
     @Autowired
     MockMvc mockMvc;
 
     @MockBean
-    ClientService clientService;
+    ProductService productService;
 
-    private final String URL = "/v1/clients";
+    private final String URL = "/v1/products";
 
 
     @Test
-    void createClient() throws Exception {
-        var client = ClientTemplatTest.getClientTemplat();
+    void createProduct() throws Exception {
+        var product = getProducTemplat();
 
-        when(clientService.createClient(any())).thenReturn(ClientTemplatTest.getClientTemplat());
+        when(productService.createProduct(any())).thenReturn(getProducTemplat());
         mockMvc.perform(post(URL)
-                .contentType(APPLICATION_JSON)
-                .content(JsonMapper.asJsonString(client)))
+                        .contentType(APPLICATION_JSON)
+                        .content(JsonMapper.asJsonString(product)))
                 .andDo(print()).andExpect(status().isCreated())
-                .andExpect(jsonPath("$.email").value("JOAO@GMAIL.COM"));
+                .andExpect(jsonPath("$.value").value(2.222));
 
-        verify(clientService, times(1)).createClient(any());
+        verify(productService, times(1)).createProduct(any());
     }
-
-    @Test
-    void getClient() throws Exception {
-        when(clientService.getClient(any())).thenReturn(ClientTemplatTest.getClientTemplat());
-
-        mockMvc.perform(get("/v1/clients/{id}",1)
-                .contentType(APPLICATION_JSON))
-                .andDo(print())
-                .andExpect(status().isOk())
-                .andExpect(jsonPath("$.name").isNotEmpty());
-
-    }
-
-
-    @Test
-    void deleteClient() throws Exception {
-
-        mockMvc.perform(delete("/v1/clients/{id}",1)
-                        .contentType(APPLICATION_JSON))
-                .andDo(print())
-                .andExpect(status().isNoContent());
-    }
-
-//
-//        .andExpect(jsonPath("$.message").value("Request fields are invalid"))
-//            .andExpect(jsonPath("$.error").isEmpty())
-//            .andExpect(jsonPath("$.code").value("API_FIELDS_INVALID"))
-//            .andExpect(jsonPath("$.details").isArray());
 }

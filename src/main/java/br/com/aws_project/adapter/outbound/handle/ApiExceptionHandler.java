@@ -72,6 +72,7 @@ public class ApiExceptionHandler extends ResponseEntityExceptionHandler {
 
     @Override
     protected ResponseEntity<Object> handleHttpMessageNotReadable(HttpMessageNotReadableException ex, HttpHeaders headers, HttpStatus status, WebRequest request) {
+      log.error(ex.getMessage(), ex);
         ErrorDto body = new ErrorDto()
                 .withCode(MessageProperties.API_BODY_INVALID.toString())
                 .withMessage(messageService.get(MessageProperties.API_BODY_INVALID))
@@ -105,6 +106,7 @@ public class ApiExceptionHandler extends ResponseEntityExceptionHandler {
 
     @ExceptionHandler(value = {BusinessException.class})
     public ResponseEntity<Object> businessExceptionHandler(BusinessException ex, WebRequest request) {
+        log.error(ex.getMessage(), ex);
         ErrorDto body = new ErrorDto()
                 .withCode(ex.getCodeAsString())
                 .withMessage(messageService.get(ex.getCodeAsString(), ex.getArgs()))

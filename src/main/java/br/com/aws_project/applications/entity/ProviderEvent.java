@@ -9,7 +9,7 @@ import lombok.Setter;
 @Getter
 @AllArgsConstructor
 @NoArgsConstructor
-public class ClientEvent {
+public class ProviderEvent {
 
     private String id;
     private String name;
