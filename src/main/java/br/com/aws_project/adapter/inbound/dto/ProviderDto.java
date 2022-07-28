@@ -1,10 +1,6 @@
-package br.com.aws_project.applications.entity;
+package br.com.aws_project.adapter.inbound.dto;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
-import lombok.With;
+import lombok.*;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
@@ -14,7 +10,7 @@ import org.springframework.data.mongodb.core.mapping.Document;
 @With
 @AllArgsConstructor
 @NoArgsConstructor
-public class Client {
+public class ProviderDto {
     @Id
     private String _id;
 

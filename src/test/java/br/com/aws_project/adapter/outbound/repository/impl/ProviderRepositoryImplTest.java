@@ -1,7 +1,8 @@
-package br.com.aws_project.adapter.outbound.repository;
+package br.com.aws_project.adapter.outbound.repository.impl;
 
+import br.com.aws_project.adapter.outbound.repository.ClientMongoRepository;
+import br.com.aws_project.adapter.outbound.repository.impl.ClientRepositoryImpl;
 import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
@@ -14,11 +15,13 @@ import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 import static org.mockito.MockitoAnnotations.openMocks;
 
-class ClientRepositoryImplTest {
+class ProviderRepositoryImplTest {
 
-  @Mock ClientMongoRepository clientMongoRepository;
+  @Mock
+  ClientMongoRepository clientMongoRepository;
 
-  @InjectMocks ClientRepositoryImpl clientRepositoryImpl;
+  @InjectMocks
+  ClientRepositoryImpl clientRepositoryImpl;
 
   @BeforeEach
   void setup() {

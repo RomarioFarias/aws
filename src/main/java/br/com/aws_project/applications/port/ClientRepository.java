@@ -1,13 +1,13 @@
 package br.com.aws_project.applications.port;
 
-import br.com.aws_project.applications.entity.Client;
+import br.com.aws_project.applications.entity.Provider;
 
 import java.util.Optional;
 
 public interface ClientRepository {
 
-    Client createClient(Client client);
-    Optional<Client> getClient(String id);
+    Provider createClient(Provider provider);
+    Optional<Provider> getClient(String id);
 
-    void deleteClientById(Client client);
+    void deleteClientById(Provider provider);
 }

@@ -1,6 +1,6 @@
 package br.com.aws_project.templates;
 
-import br.com.aws_project.applications.entity.Client;
+import br.com.aws_project.applications.entity.Provider;
 import java.util.Optional;
 
 public class ClientTemplatTest {
@@ -11,15 +11,15 @@ public class ClientTemplatTest {
     public static final String ID = "b2371672-879e-4f0e-a051-146048de21b9";
 
 
-    public static Client getClientTemplat() {
-        return new Client()
+    public static Provider getClientTemplat() {
+        return new Provider()
                 .withId(ID)
                 .withCpf(CPF)
                 .withEmail(EMAIL)
                 .withName(NAME);
     }
 
-    public static Optional<Client> getOptionalClientTemplat() {
+    public static Optional<Provider> getOptionalClientTemplat() {
         return Optional.of(getClientTemplat());
     }
 }
