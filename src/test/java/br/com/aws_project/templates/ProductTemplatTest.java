@@ -2,6 +2,8 @@ package br.com.aws_project.templates;
 
 import br.com.aws_project.applications.entity.Product;
 
+import java.util.Optional;
+
 public class ProductTemplatTest {
 
     public static final String DESCRIPTION  = "JOAO";
@@ -19,6 +21,10 @@ public class ProductTemplatTest {
                 .withValue(VALUE)
                 .withAmount(AMOUNT);
 
+    }
+
+    public static Optional<Product> getOptinalProduct(){
+        return Optional.of(getProducTemplat());
     }
 
 }

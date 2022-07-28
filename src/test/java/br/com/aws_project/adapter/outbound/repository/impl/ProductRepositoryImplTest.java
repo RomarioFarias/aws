@@ -1,14 +1,14 @@
 package br.com.aws_project.adapter.outbound.repository.impl;
 
 import br.com.aws_project.adapter.outbound.repository.ProductMongoRepository;
-import br.com.aws_project.applications.port.ProductRepository;
-import br.com.aws_project.templates.ProductTemplatTest;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.mockito.*;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
+import org.mockito.Mockito;
+import org.mockito.MockitoAnnotations;
 
-import static br.com.aws_project.templates.ProductTemplatTest.getProducTemplat;
-import static org.junit.jupiter.api.Assertions.*;
+import static br.com.aws_project.templates.ProductTemplatTest.*;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
@@ -32,5 +32,12 @@ class ProductRepositoryImplTest {
         productRepositoryImpl.createProduct(getProducTemplat());
         verify(productRepository, times(1)).save(any());
 
+    }
+
+    @Test
+    void findProductById() {
+        Mockito.when(productRepository.findProductById(any())).thenReturn(getOptinalProduct());
+        productRepositoryImpl.findProductById(ID);
+        verify(productRepository, times(1)).findProductById(any());
     }
 }
