@@ -3,6 +3,7 @@ package br.com.aws_project.adapter.inbound.controller;
 import br.com.aws_project.adapter.outbound.mapper.ClientModelMapper;
 import br.com.aws_project.templates.ClientTemplatTest;
 import br.com.aws_project.applications.port.ClientService;
+import br.com.aws_project.utils.JsonMapper;
 import lombok.RequiredArgsConstructor;
 import org.junit.jupiter.api.Test;
 import org.modelmapper.ModelMapper;
@@ -14,13 +15,15 @@ import org.springframework.boot.autoconfigure.mongo.MongoAutoConfiguration;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.http.MediaType;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.web.servlet.MockMvc;
 
 import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 import static org.springframework.http.MediaType.APPLICATION_JSON;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -47,10 +50,21 @@ class ClientControllerTest {
     @MockBean
     ClientService clientService;
 
+    private final String URL = "/v1/clients";
+
 
     @Test
-    void createClient() {
-        System.out.println("LALA");
+    void createClient() throws Exception {
+        var client = ClientTemplatTest.getClientTemplat();
+
+        when(clientService.createClient(any())).thenReturn(ClientTemplatTest.getClientTemplat());
+        mockMvc.perform(post(URL)
+                .contentType(APPLICATION_JSON)
+                .content(JsonMapper.asJsonString(client)))
+                .andDo(print()).andExpect(status().isCreated())
+                .andExpect(jsonPath("$.email").value("JOAO@GMAIL.COM"));
+
+        verify(clientService, times(1)).createClient(any());
     }
 
     @Test

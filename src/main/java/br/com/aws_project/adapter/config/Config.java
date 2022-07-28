@@ -2,6 +2,7 @@ package br.com.aws_project.adapter.config;
 
 import br.com.aws_project.adapter.outbound.mapper.ClientModelMapper;
 import br.com.aws_project.applications.port.ClientRepository;
+import br.com.aws_project.applications.port.ClientSnsEvent;
 import br.com.aws_project.applications.service.ClientServiceImpl;
 import org.modelmapper.ModelMapper;
 import org.springframework.context.MessageSource;
@@ -19,8 +20,8 @@ public class Config {
     }
 
     @Bean
-    ClientServiceImpl clientServiceImpl(ClientRepository clientRepository) {
-        return new ClientServiceImpl(clientRepository);
+    ClientServiceImpl clientServiceImpl(ClientRepository clientRepository, ClientSnsEvent clientSnsEvent) {
+        return new ClientServiceImpl(clientRepository, clientSnsEvent);
     }
 
     @Bean

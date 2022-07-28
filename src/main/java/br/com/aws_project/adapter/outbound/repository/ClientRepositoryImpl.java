@@ -16,7 +16,6 @@ public class ClientRepositoryImpl implements ClientRepository {
 
     @Override
     public Client createClient(Client client) {
-        client.setId(UUID.randomUUID().toString());
         return clientMongoRepository.save(client);
     }
 
