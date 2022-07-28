@@ -1,7 +1,7 @@
 package br.com.aws_project.adapter.inbound.ampq;
 
-import br.com.aws_project.adapter.inbound.dto.ClientDto;
 import br.com.aws_project.adapter.outbound.amqp.SNSProducer;
+import br.com.aws_project.applications.entity.ClientEvent;
 import br.com.aws_project.applications.port.ClientSnsEvent;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -20,10 +20,10 @@ public class ClientPublisherImpl implements ClientSnsEvent {
 
 
     @Override
-    public void deleteClient(ClientDto clientDto) {
+    public void deleteClient(ClientEvent clientEven) {
         log.info("Sending notification to [topic={}] for client delete [getId={}]",
-                clientUpdateTopic, clientDto.getId());
+                clientUpdateTopic, clientEven.getId());
 
-        producer.send(clientUpdateTopic, clientDto);
+        producer.send(clientUpdateTopic, clientEven);
     }
 }

@@ -30,5 +30,11 @@ public class ClientController {
         return clientModelMapper.toClientDto(client);
     }
 
+    @DeleteMapping("/{id}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void deleteClientById(@PathVariable String id) {
+        clientService.deleteClientById(id);
+    }
+
 
 }

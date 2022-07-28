@@ -2,6 +2,7 @@ package br.com.aws_project.applications.service;
 
 import br.com.aws_project.applications.exception.ResourceNotFoundException;
 import br.com.aws_project.applications.port.ClientRepository;
+import br.com.aws_project.applications.port.ClientSnsEvent;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -27,6 +28,9 @@ class ClientServiceImplTest {
 
     @Mock
     ClientRepository clientRepository;
+
+    @Mock
+    ClientSnsEvent clientSnsEvent;
 
     @BeforeEach
      void setup() {
@@ -56,5 +60,14 @@ class ClientServiceImplTest {
         Throwable ex = assertThrows(Throwable.class, () -> clienteServiceImpl.getClient(ID));
         assertEquals(ex.getClass() ,ResourceNotFoundException.class);
         verify(clientRepository, times(1)).getClient(anyString());
+    }
+
+    @Test
+    @DisplayName("Return delete Client by ID")
+    void deleteClient() {
+        when(clientRepository.getClient(anyString())).thenReturn(getOptionalClientTemplat());
+        this.clienteServiceImpl.deleteClientById(ID);
+        verify(clientRepository, times(1)).getClient(anyString());
+        verify(clientSnsEvent, times(1)).deleteClient(any());
     }
 }

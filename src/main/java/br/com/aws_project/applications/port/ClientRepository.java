@@ -8,4 +8,6 @@ public interface ClientRepository {
 
     Client createClient(Client client);
     Optional<Client> getClient(String id);
+
+    void deleteClientById(Client client);
 }
