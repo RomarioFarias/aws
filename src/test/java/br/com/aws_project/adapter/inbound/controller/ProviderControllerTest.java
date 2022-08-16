@@ -2,7 +2,8 @@ package br.com.aws_project.adapter.inbound.controller;
 
 import br.com.aws_project.adapter.outbound.mapper.ClientModelMapper;
 import br.com.aws_project.templates.ClientTemplatTest;
-import br.com.aws_project.applications.port.ClientService;
+import br.com.aws_project.applications.port.ProviderService;
+import br.com.aws_project.utils.JsonMapper;
 import lombok.RequiredArgsConstructor;
 import org.junit.jupiter.api.Test;
 import org.modelmapper.ModelMapper;
@@ -18,9 +19,9 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.web.servlet.MockMvc;
 
 import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 import static org.springframework.http.MediaType.APPLICATION_JSON;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -39,23 +40,34 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
                 ModelMapper.class,
                 ClientModelMapper.class
         })
-class ClientControllerTest {
+class ProviderControllerTest {
 
     @Autowired
     MockMvc mockMvc;
 
     @MockBean
-    ClientService clientService;
+    ProviderService providerService;
+
+    private final String URL = "/v1/clients";
 
 
     @Test
-    void createClient() {
-        System.out.println("LALA");
+    void createClient() throws Exception {
+        var client = ClientTemplatTest.getClientTemplat();
+
+        when(providerService.createClient(any())).thenReturn(ClientTemplatTest.getClientTemplat());
+        mockMvc.perform(post(URL)
+                .contentType(APPLICATION_JSON)
+                .content(JsonMapper.asJsonString(client)))
+                .andDo(print()).andExpect(status().isCreated())
+                .andExpect(jsonPath("$.email").value("JOAO@GMAIL.COM"));
+
+        verify(providerService, times(1)).createClient(any());
     }
 
     @Test
     void getClient() throws Exception {
-        when(clientService.getClient(any())).thenReturn(ClientTemplatTest.getClientTemplat());
+        when(providerService.getClient(any())).thenReturn(ClientTemplatTest.getClientTemplat());
 
         mockMvc.perform(get("/v1/clients/{id}",1)
                 .contentType(APPLICATION_JSON))
@@ -63,6 +75,16 @@ class ClientControllerTest {
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.name").isNotEmpty());
 
+    }
+
+
+    @Test
+    void deleteClient() throws Exception {
+
+        mockMvc.perform(delete("/v1/clients/{id}",1)
+                        .contentType(APPLICATION_JSON))
+                .andDo(print())
+                .andExpect(status().isNoContent());
     }
 
 //

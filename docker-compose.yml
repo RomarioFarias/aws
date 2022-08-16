@@ -1,5 +1,15 @@
 version: '3.7'
 services:
+  aws:
+    image: localstack/localstack:latest
+    container_name: aws
+    ports:
+      - '4566-4584:4566-4584'
+    volumes:
+      - 'aws-storage:/tmp/localstack'
+    environment:
+      - SERVICES=sqs,sns
+      - DATA_DIR=/tmp/localstack/data
   mongodb_container:
     image: mongo:latest
     environment:
@@ -12,3 +22,4 @@ services:
 
 volumes:
   mongodb_data_container:
+  aws-storage:
