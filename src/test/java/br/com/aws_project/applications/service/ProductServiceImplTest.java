@@ -39,12 +39,33 @@ class ProductServiceImplTest {
     }
 
     @Test
-    void findProducById() {
+    void findProductById() {
         when(productRepository.findProductById(any())).thenReturn(getOptinalProduct());
         var product = productServiceImpl.findProductById(ID);
 
         Assertions.assertNotNull(product);
         verify(productRepository, times(1)).findProductById(any());
+
+    }
+
+    @Test
+    void deleteProductById() {
+        when(productRepository.findProductById(any())).thenReturn(getOptinalProduct());
+        productServiceImpl.deleteProduct(ID);
+
+        verify(productRepository, times(1)).findProductById(any());
+        verify(productRepository, times(1)).deleteProduct(any());
+
+    }
+
+
+    @Test
+    void deleteProductAll() {
+        var listProduct = getListProduct();
+        when(productRepository.listProducByProviderId(any())).thenReturn(listProduct);
+        productServiceImpl.deleteAllProductByProviderId(ID);
+        verify(productRepository, times(1)).listProducByProviderId(any());
+        verify(productRepository, times(1)).deleteAllProduct(any());
 
     }
 }

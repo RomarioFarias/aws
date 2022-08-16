@@ -16,8 +16,6 @@ import java.util.UUID;
 @AllArgsConstructor
 public class ProductServiceImpl implements ProductService {
 
-
-
     private final ProductRepository productRepository;
 
     private final ProviderService providerService;
@@ -25,17 +23,36 @@ public class ProductServiceImpl implements ProductService {
     @Override
     public Product createProduct(Product product) {
         this.validProvider(product.getProviderId());
-
         product.setId(UUID.randomUUID().toString());
-        return productRepository.createProduct(product);
+        var productSave = productRepository.createProduct(product);
+        log.info("Product create by [ID: {}]", productSave.getId());
+        return productSave;
     }
 
     @Override
     public Product findProductById(String productId) {
-        return productRepository.findProductById(productId).orElseThrow(()-> new ResourceNotFoundException(ExceptionCode.PRODUCT_NOT_FOUND, productId));
+        log.info("Find Product by [ID: {}]", productId);
+
+        return productRepository.findProductById(productId).orElseThrow(() -> new ResourceNotFoundException(ExceptionCode.PRODUCT_NOT_FOUND, productId));
     }
 
-    private void validProvider(String providerId){
+    @Override
+    public void deleteProduct(String productId) {
+        var product = this.findProductById(productId);
+        log.info("Delete product by [ID:{}]", productId);
+        this.productRepository.deleteProduct(product);
+    }
+
+
+    @Override
+    public void deleteAllProductByProviderId(String providerId) {
+        var listProduct = productRepository.listProducByProviderId(providerId);
+        log.info("Delete all product by [providerID:{}]", providerId);
+        productRepository.deleteAllProduct(listProduct);
+
+    }
+
+    private void validProvider(String providerId) {
         providerService.getClient(providerId);
     }
 }

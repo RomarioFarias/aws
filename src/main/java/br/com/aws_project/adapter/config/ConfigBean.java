@@ -2,7 +2,10 @@ package br.com.aws_project.adapter.config;
 
 import br.com.aws_project.adapter.outbound.mapper.ClientModelMapper;
 import br.com.aws_project.adapter.outbound.mapper.ProductModelMapper;
-import br.com.aws_project.applications.port.*;
+import br.com.aws_project.applications.port.ClientRepository;
+import br.com.aws_project.applications.port.ClientSnsEvent;
+import br.com.aws_project.applications.port.ProductRepository;
+import br.com.aws_project.applications.port.ProviderService;
 import br.com.aws_project.applications.service.ProductServiceImpl;
 import br.com.aws_project.applications.service.ProviderServiceImpl;
 import org.modelmapper.ModelMapper;
