@@ -6,4 +6,9 @@ public interface ProductService {
     Product createProduct(Product product);
     Product findProductById(String productId);
 
+    void deleteProduct(String productId);
+
+    void deleteAllProductByProviderId(String productId);
+
+
 }

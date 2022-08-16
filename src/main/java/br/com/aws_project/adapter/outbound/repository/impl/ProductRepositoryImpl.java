@@ -7,6 +7,7 @@ import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Component;
 
 import java.util.Optional;
+import java.util.Set;
 
 @Component
 @AllArgsConstructor
@@ -23,5 +24,20 @@ public class ProductRepositoryImpl implements ProductRepository {
     @Override
     public Optional<Product> findProductById(String productId) {
         return productMongoRepository.findProductById(productId);
+    }
+
+    @Override
+    public void deleteProduct(Product product) {
+        this.productMongoRepository.delete(product);
+    }
+
+    @Override
+    public Set<Product> listProducByProviderId(String productId) {
+        return productMongoRepository.findProductByProviderId(productId);
+    }
+
+    @Override
+    public void deleteAllProduct(Set<Product> listProduct) {
+        productMongoRepository.deleteAll(listProduct);
     }
 }

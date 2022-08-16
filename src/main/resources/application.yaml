@@ -7,14 +7,22 @@ spring:
       auto-index-creation: true
 
 cloud:
+
   aws:
     stack:
       auto: false
     credentials:
+      useDefaultAwsCredentialsChain: true
       access-key: ${AWS_ACCESS_KEY:localstack}
       secret-key: ${AWS_SECRET_KEY:localstack}
+
     region:
       static: ${AWS_REGION:us-east-1}
+
+    sqs:
+      queue:
+        test-queue: ${ADD_SCHOOL_QUEUE:test-queue}
+      endpoint: ${AWS_SQS_POINT_URL:http://localhost:4566/} #APENAS PARA RODAR LOCAL NO LOCALSTACK
     sns:
       topic:
         t-client-delete-requested: ${T_MEDIA_DELETION_REQUESTED:t-client-delete-requested}

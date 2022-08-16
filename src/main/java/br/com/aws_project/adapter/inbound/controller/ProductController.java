@@ -28,4 +28,9 @@ public class ProductController {
         return productModelMapper.toProductDto(product);
     }
 
+    @DeleteMapping("/{productId}")
+    void deleteProduct(@PathVariable String productId){
+       productService.deleteProduct(productId);
+    }
+
 }

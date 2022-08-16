@@ -2,7 +2,9 @@ package br.com.aws_project.templates;
 
 import br.com.aws_project.applications.entity.Product;
 
+import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 
 public class ProductTemplatTest {
 
@@ -25,6 +27,10 @@ public class ProductTemplatTest {
 
     public static Optional<Product> getOptinalProduct(){
         return Optional.of(getProducTemplat());
+    }
+
+    public static Set<Product> getListProduct(){
+        return Set.of(getProducTemplat());
     }
 
 }

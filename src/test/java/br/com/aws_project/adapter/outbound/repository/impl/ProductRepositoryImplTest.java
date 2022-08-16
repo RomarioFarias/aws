@@ -40,4 +40,22 @@ class ProductRepositoryImplTest {
         productRepositoryImpl.findProductById(ID);
         verify(productRepository, times(1)).findProductById(any());
     }
+
+    @Test
+    void deleteProduct() {
+        productRepositoryImpl.deleteProduct(getProducTemplat());
+        verify(productRepository, times(1)).delete(any());
+    }
+
+    @Test
+    void deleteAllProduct() {
+        productRepositoryImpl.deleteAllProduct(getListProduct());
+        verify(productRepository, times(1)).deleteAll(any());
+    }
+
+    @Test
+    void listProducByProviderId() {
+        productRepositoryImpl.listProducByProviderId(ID);
+        verify(productRepository, times(1)).findProductByProviderId(any());
+    }
 }

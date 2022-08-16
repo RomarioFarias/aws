@@ -22,8 +22,7 @@ import static br.com.aws_project.templates.ProductTemplatTest.getProducTemplat;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
 import static org.springframework.http.MediaType.APPLICATION_JSON;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -74,5 +73,14 @@ class ProductControllerTest {
                 .contentType(APPLICATION_JSON))
                 .andDo(print())
                 .andExpect(jsonPath("$.value").value(2.222));
+    }
+
+    @Test
+    void deleteProductById() throws Exception {
+        when(productService.findProductById(any())).thenReturn(getProducTemplat());
+        var url = URL+"/{id}";
+        this.mockMvc.perform(delete(url,ID)
+                        .contentType(APPLICATION_JSON))
+                .andDo(print());
     }
 }

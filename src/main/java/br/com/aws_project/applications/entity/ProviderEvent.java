@@ -1,12 +1,11 @@
 package br.com.aws_project.applications.entity;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
-@Setter
 @Getter
+@Setter
+@With
+@Builder
 @AllArgsConstructor
 @NoArgsConstructor
 public class ProviderEvent {
