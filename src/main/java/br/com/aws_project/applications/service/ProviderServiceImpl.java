@@ -10,6 +10,7 @@ import br.com.aws_project.applications.port.ProviderService;
 import br.com.aws_project.applications.port.ClientSnsEvent;
 import lombok.extern.slf4j.Slf4j;
 
+import java.util.Set;
 import java.util.UUID;
 
 @Slf4j
@@ -24,15 +25,15 @@ public class ProviderServiceImpl implements ProviderService {
     private final ClientSnsEvent clientSnsEvent;
 
     @Override
-    public Provider createClient(Provider provider) {
-        provider.setId(UUID.randomUUID().toString());
-        log.info("Create client by [ID={}]", provider.getId());
-        return clientRepository.createClient(provider);
+    public Provider createClient(Provider Provider) {
+        Provider.setId(UUID.randomUUID().toString());
+        log.info("Create client by [ID={}]", Provider.getId());
+        return clientRepository.createProvider(Provider);
     }
 
     @Override
     public Provider getClient(String id) {
-        var client = clientRepository.getClient(id).orElseThrow(() -> new ResourceNotFoundException(ExceptionCode.CLIENT_NOT_FOUND, id));
+        var client = clientRepository.getProvider(id).orElseThrow(() -> new ResourceNotFoundException(ExceptionCode.CLIENT_NOT_FOUND, id));
         log.info("User client name: [name={}]", client.getName());
         return client;
     }
@@ -40,8 +41,13 @@ public class ProviderServiceImpl implements ProviderService {
     @Override
     public void deleteClientById(String id) {
         var client = this.getClient(id);
-        log.info("Delete Client by [ID={}]",client.getId());
+        log.info("Delete Client by [ID={}]", client.getId());
         clientRepository.deleteClientById(client);
         clientSnsEvent.deleteClient(new ProviderEvent(client.getId(), client.getName()));
+    }
+
+    @Override
+    public Set<Provider> listClients() {
+        return this.clientRepository.listClients();
     }
 }

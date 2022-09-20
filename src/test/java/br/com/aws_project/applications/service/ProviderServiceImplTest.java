@@ -39,19 +39,19 @@ class ProviderServiceImplTest {
 
     @Test
     void createClient() {
-        when(clientRepository.createClient(any())).thenReturn(getClientTemplat());
+        when(clientRepository.createProvider(any())).thenReturn(getClientTemplat());
         var client = this.clienteServiceImpl.createClient(getClientTemplat());
         assertTrue("client get by id is not null",client.getId() != null);
-        verify(clientRepository, times(1)).createClient(any());
+        verify(clientRepository, times(1)).createProvider(any());
     }
 
     @Test
     @DisplayName("Return Client by ID")
     void getClient() {
-        when(clientRepository.getClient(any())).thenReturn(getOptionalClientTemplat());
+        when(clientRepository.getProvider(any())).thenReturn(getOptionalClientTemplat());
         var client = this.clienteServiceImpl.getClient(ID);
         assertNotNull("Test OK",client);
-        verify(clientRepository, times(1)).getClient(anyString());
+        verify(clientRepository, times(1)).getProvider(anyString());
     }
 
     @Test
@@ -59,15 +59,15 @@ class ProviderServiceImplTest {
     void sholdReturngetResourceNotFoundException() {
         Throwable ex = assertThrows(Throwable.class, () -> clienteServiceImpl.getClient(ID));
         assertEquals(ex.getClass() ,ResourceNotFoundException.class);
-        verify(clientRepository, times(1)).getClient(anyString());
+        verify(clientRepository, times(1)).getProvider(anyString());
     }
 
     @Test
     @DisplayName("Return delete Client by ID")
     void deleteClient() {
-        when(clientRepository.getClient(anyString())).thenReturn(getOptionalClientTemplat());
+        when(clientRepository.getProvider(anyString())).thenReturn(getOptionalClientTemplat());
         this.clienteServiceImpl.deleteClientById(ID);
-        verify(clientRepository, times(1)).getClient(anyString());
+        verify(clientRepository, times(1)).getProvider(anyString());
         verify(clientSnsEvent, times(1)).deleteClient(any());
     }
 }

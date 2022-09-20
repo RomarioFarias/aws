@@ -1,6 +1,6 @@
 package br.com.aws_project.adapter.config;
 
-import br.com.aws_project.adapter.outbound.mapper.ClientModelMapper;
+import br.com.aws_project.adapter.outbound.mapper.ProviderModelMapper;
 import br.com.aws_project.adapter.outbound.mapper.ProductModelMapper;
 import br.com.aws_project.applications.port.ClientRepository;
 import br.com.aws_project.applications.port.ClientSnsEvent;
@@ -29,8 +29,8 @@ public class ConfigBean {
     }
 
     @Bean
-    ClientModelMapper clientModelMapper(ModelMapper modelMapper){
-        return new ClientModelMapper(modelMapper);
+    ProviderModelMapper clientModelMapper(ModelMapper modelMapper){
+        return new ProviderModelMapper(modelMapper);
     }
 
     @Bean

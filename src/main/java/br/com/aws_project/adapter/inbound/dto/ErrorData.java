@@ -1,10 +1,6 @@
 package br.com.aws_project.adapter.inbound.dto;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
-import lombok.With;
+import lombok.*;
 
 @With
 @Getter

@@ -1,6 +1,6 @@
 package br.com.aws_project.adapter.inbound.controller;
 
-import br.com.aws_project.adapter.outbound.mapper.ClientModelMapper;
+import br.com.aws_project.adapter.outbound.mapper.ProviderModelMapper;
 import br.com.aws_project.templates.ClientTemplatTest;
 import br.com.aws_project.applications.port.ProviderService;
 import br.com.aws_project.utils.JsonMapper;
@@ -34,11 +34,11 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
         })
 @AutoConfigureMockMvc
 @RequiredArgsConstructor
-@SpringBootTest(classes = ClientController.class)
+@SpringBootTest(classes = ProviderController.class)
 @ContextConfiguration(
         classes = {
                 ModelMapper.class,
-                ClientModelMapper.class
+                ProviderModelMapper.class
         })
 class ProviderControllerTest {
 

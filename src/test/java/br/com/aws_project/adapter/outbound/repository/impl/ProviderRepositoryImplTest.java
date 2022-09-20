@@ -1,7 +1,6 @@
 package br.com.aws_project.adapter.outbound.repository.impl;
 
 import br.com.aws_project.adapter.outbound.repository.ClientMongoRepository;
-import br.com.aws_project.adapter.outbound.repository.impl.ClientRepositoryImpl;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
@@ -38,7 +37,7 @@ class ProviderRepositoryImplTest {
   @Test
   void getClient() {
     when(clientMongoRepository.findClientById(anyString())).thenReturn(getOptionalClientTemplat());
-    clientRepositoryImpl.getClient(ID);
+    clientRepositoryImpl.getProvider(ID);
     verify(clientMongoRepository, times(1)).findClientById(any());
   }
 
