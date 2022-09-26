@@ -2,8 +2,8 @@ package br.com.aws_project.adapter.config;
 
 import br.com.aws_project.adapter.outbound.mapper.ProviderModelMapper;
 import br.com.aws_project.adapter.outbound.mapper.ProductModelMapper;
-import br.com.aws_project.applications.port.ClientRepository;
-import br.com.aws_project.applications.port.ClientSnsEvent;
+import br.com.aws_project.applications.port.ProviderRepository;
+import br.com.aws_project.applications.port.ProviderSnsEvent;
 import br.com.aws_project.applications.port.ProductRepository;
 import br.com.aws_project.applications.port.ProviderService;
 import br.com.aws_project.applications.service.ProductServiceImpl;
@@ -24,8 +24,8 @@ public class ConfigBean {
     }
 
     @Bean
-    ProviderServiceImpl clientServiceImpl(ClientRepository clientRepository, ClientSnsEvent clientSnsEvent) {
-        return new ProviderServiceImpl(clientRepository, clientSnsEvent);
+    ProviderServiceImpl clientServiceImpl(ProviderRepository providerRepository, ProviderSnsEvent providerSnsEvent) {
+        return new ProviderServiceImpl(providerRepository, providerSnsEvent);
     }
 
     @Bean

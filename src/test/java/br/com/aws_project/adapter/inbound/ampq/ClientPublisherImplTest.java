@@ -15,7 +15,7 @@ import static org.mockito.Mockito.verify;
 class ClientPublisherImplTest {
 
     @InjectMocks
-    ClientPublisherImpl clientPublisher;
+    ProviderPublisherImpl clientPublisher;
 
     @Mock
     SNSProducer snsProducer;
@@ -27,7 +27,7 @@ class ClientPublisherImplTest {
 
     @Test
     void deleteClient() {
-       this.clientPublisher.deleteClient(getProviderEventTemplat());
+       this.clientPublisher.deleteProvider(getProviderEventTemplat());
        verify(snsProducer, times(1)).send(any(),any());
     }
 }

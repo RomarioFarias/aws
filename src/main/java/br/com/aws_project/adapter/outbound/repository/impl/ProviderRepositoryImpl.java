@@ -1,8 +1,8 @@
 package br.com.aws_project.adapter.outbound.repository.impl;
 
-import br.com.aws_project.adapter.outbound.repository.ClientMongoRepository;
+import br.com.aws_project.adapter.outbound.repository.ProviderMongoRepository;
 import br.com.aws_project.applications.entity.Provider;
-import br.com.aws_project.applications.port.ClientRepository;
+import br.com.aws_project.applications.port.ProviderRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Component;
 
@@ -12,27 +12,27 @@ import java.util.Set;
 
 @Component
 @AllArgsConstructor
-public class ClientRepositoryImpl implements ClientRepository {
+public class ProviderRepositoryImpl implements ProviderRepository {
 
-    private ClientMongoRepository clientMongoRepository;
+    private ProviderMongoRepository providerMongoRepository;
 
     @Override
     public Provider createProvider(Provider provider) {
-        return clientMongoRepository.save(provider);
+        return providerMongoRepository.save(provider);
     }
 
     @Override
     public Optional<Provider> getProvider(String id) {
-        return clientMongoRepository.findClientById(id);
+        return providerMongoRepository.findProviderById(id);
     }
 
     @Override
-    public void deleteClientById(Provider provider) {
-        clientMongoRepository.delete(provider);
+    public void deleteProviderById(Provider provider) {
+        providerMongoRepository.delete(provider);
     }
 
     @Override
     public Set<Provider> listProvider() {
-            return new HashSet<>(clientMongoRepository.findAll());
+            return new HashSet<>(providerMongoRepository.findAll());
     }
 }

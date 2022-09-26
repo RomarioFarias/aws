@@ -1,36 +1,28 @@
 package br.com.aws_project.adapter.outbound.repository.impl;
 
-import br.com.aws_project.adapter.outbound.repository.ClientMongoRepository;
-import br.com.aws_project.applications.entity.Provider;
-import br.com.aws_project.templates.ClientTemplatTest;
+import br.com.aws_project.adapter.outbound.repository.ProviderMongoRepository;
+import br.com.aws_project.templates.ProviderTemplatTest;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import org.springframework.test.util.AssertionErrors;
 
 import java.util.ArrayList;
-import java.util.stream.Collectors;
 
-import static br.com.aws_project.templates.ClientTemplatTest.*;
-import static org.junit.jupiter.api.Assertions.assertArrayEquals;
+import static br.com.aws_project.templates.ProviderTemplatTest.*;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyString;
-import static org.mockito.Mockito.times;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 import static org.mockito.MockitoAnnotations.openMocks;
-import static org.springframework.test.util.AssertionErrors.assertNotNull;
-import static org.springframework.test.util.AssertionErrors.assertTrue;
 
 class ProviderRepositoryImplTest {
 
     @Mock
-    ClientMongoRepository clientMongoRepository;
+    ProviderMongoRepository providerMongoRepository;
 
     @InjectMocks
-    ClientRepositoryImpl clientRepositoryImpl;
+    ProviderRepositoryImpl providerRepository;
 
     @BeforeEach
     void setup() {
@@ -38,30 +30,30 @@ class ProviderRepositoryImplTest {
     }
 
     @Test
-    void createClient() {
-        when(clientMongoRepository.save(any())).thenReturn(getClientTemplat());
-        clientMongoRepository.save(getClientTemplat());
-        verify(clientMongoRepository, times(1)).save(any());
+    void createProvider() {
+        when(providerMongoRepository.save(any())).thenReturn(getProviderTemplat());
+        providerMongoRepository.save(getProviderTemplat());
+        verify(providerMongoRepository, times(1)).save(any());
     }
 
     @Test
-    void getClient() {
-        when(clientMongoRepository.findClientById(anyString())).thenReturn(getOptionalClientTemplat());
-        clientRepositoryImpl.getProvider(ID);
-        verify(clientMongoRepository, times(1)).findClientById(any());
+    void getProvider() {
+        when(providerMongoRepository.findProviderById(anyString())).thenReturn(getOptionalProviderTemplat());
+        providerRepository.getProvider(ID);
+        verify(providerMongoRepository, times(1)).findProviderById(any());
     }
 
     @Test
-    void deleteClient() {
-        clientRepositoryImpl.deleteClientById(getClientTemplat());
-        verify(clientMongoRepository, times(1)).delete(any());
+    void deleteProvider() {
+        providerRepository.deleteProviderById(getProviderTemplat());
+        verify(providerMongoRepository, times(1)).delete(any());
     }
 
     @Test
     void listAllProvider() {
-        when(clientMongoRepository.findAll()).thenReturn(new ArrayList<>(ClientTemplatTest.listAllProvider()));
-        var listProvider = clientRepositoryImpl.listProvider();
+        when(providerMongoRepository.findAll()).thenReturn(new ArrayList<>(ProviderTemplatTest.listAllProvider()));
+        var listProvider = providerMongoRepository.findAll();
         Assertions.assertNotNull(listProvider);
-        verify(clientMongoRepository, times(1)).findAll();
+        verify(providerMongoRepository, times(1)).findAll();
     }
 }

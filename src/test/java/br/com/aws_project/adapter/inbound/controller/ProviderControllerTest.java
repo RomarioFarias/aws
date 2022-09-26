@@ -1,7 +1,7 @@
 package br.com.aws_project.adapter.inbound.controller;
 
 import br.com.aws_project.adapter.outbound.mapper.ProviderModelMapper;
-import br.com.aws_project.templates.ClientTemplatTest;
+import br.com.aws_project.templates.ProviderTemplatTest;
 import br.com.aws_project.applications.port.ProviderService;
 import br.com.aws_project.utils.JsonMapper;
 import lombok.RequiredArgsConstructor;
@@ -18,6 +18,7 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.web.servlet.MockMvc;
 
+import static br.com.aws_project.templates.ProviderTemplatTest.getProviderTemplat;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
 import static org.springframework.http.MediaType.APPLICATION_JSON;
@@ -48,14 +49,14 @@ class ProviderControllerTest {
     @MockBean
     ProviderService providerService;
 
-    private static final String URL = "/v1/clients";
+    private static final String URL = "/v1/providers";
 
 
     @Test
     void createClient() throws Exception {
-        var client = ClientTemplatTest.getClientTemplat();
+        var client = getProviderTemplat();
 
-        when(providerService.createProvider(any())).thenReturn(ClientTemplatTest.getClientTemplat());
+        when(providerService.createProvider(any())).thenReturn(getProviderTemplat());
         mockMvc.perform(post(URL)
                 .contentType(APPLICATION_JSON)
                 .content(JsonMapper.asJsonString(client)))
@@ -67,9 +68,9 @@ class ProviderControllerTest {
 
     @Test
     void getClient() throws Exception {
-        when(providerService.getProvider(any())).thenReturn(ClientTemplatTest.getClientTemplat());
+        when(providerService.getProvider(any())).thenReturn(getProviderTemplat());
 
-        mockMvc.perform(get("/v1/clients/{id}",1)
+        mockMvc.perform(get("/v1/providers/{id}",1)
                 .contentType(APPLICATION_JSON))
                 .andDo(print())
                 .andExpect(status().isOk())
@@ -81,7 +82,7 @@ class ProviderControllerTest {
     @Test
     void deleteClient() throws Exception {
 
-        mockMvc.perform(delete("/v1/clients/{id}",1)
+        mockMvc.perform(delete("/v1/providers/{id}",1)
                         .contentType(APPLICATION_JSON))
                 .andDo(print())
                 .andExpect(status().isNoContent());
@@ -89,7 +90,7 @@ class ProviderControllerTest {
 
     @Test
     void listAllProvider() throws Exception {
-        when(providerService.listProvider()).thenReturn(ClientTemplatTest.listAllProvider());
+        when(providerService.listProvider()).thenReturn(ProviderTemplatTest.listAllProvider());
 
         mockMvc.perform(get(URL)
                 .contentType(APPLICATION_JSON))

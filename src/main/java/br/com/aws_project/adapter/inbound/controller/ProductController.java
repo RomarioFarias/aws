@@ -17,8 +17,8 @@ public class ProductController {
 
     @PostMapping()
     @ResponseStatus(HttpStatus.CREATED)
-    ProductDto createProduct(@RequestBody ProductDto productDto){
-        var product = productService.createProduct(productModelMapper.toProduct(productDto));
+    ProductDto createProduct(@RequestBody ProductDto productDTO){
+        var product = productService.createProduct(productModelMapper.toProduct(productDTO));
         return productModelMapper.toProductDto(product);
     }
 
