@@ -39,35 +39,43 @@ class ProviderServiceImplTest {
 
     @Test
     void createClient() {
-        when(clientRepository.createClient(any())).thenReturn(getClientTemplat());
-        var client = this.clienteServiceImpl.createClient(getClientTemplat());
+        when(clientRepository.createProvider(any())).thenReturn(getClientTemplat());
+        var client = this.clienteServiceImpl.createProvider(getClientTemplat());
         assertTrue("client get by id is not null",client.getId() != null);
-        verify(clientRepository, times(1)).createClient(any());
+        verify(clientRepository, times(1)).createProvider(any());
     }
 
     @Test
     @DisplayName("Return Client by ID")
     void getClient() {
-        when(clientRepository.getClient(any())).thenReturn(getOptionalClientTemplat());
-        var client = this.clienteServiceImpl.getClient(ID);
+        when(clientRepository.getProvider(any())).thenReturn(getOptionalClientTemplat());
+        var client = this.clienteServiceImpl.getProvider(ID);
         assertNotNull("Test OK",client);
-        verify(clientRepository, times(1)).getClient(anyString());
+        verify(clientRepository, times(1)).getProvider(anyString());
     }
 
     @Test
     @DisplayName("Return ResourceNotFoundException im Client by ID")
     void sholdReturngetResourceNotFoundException() {
-        Throwable ex = assertThrows(Throwable.class, () -> clienteServiceImpl.getClient(ID));
+        Throwable ex = assertThrows(Throwable.class, () -> clienteServiceImpl.getProvider(ID));
         assertEquals(ex.getClass() ,ResourceNotFoundException.class);
-        verify(clientRepository, times(1)).getClient(anyString());
+        verify(clientRepository, times(1)).getProvider(anyString());
     }
 
     @Test
     @DisplayName("Return delete Client by ID")
     void deleteClient() {
-        when(clientRepository.getClient(anyString())).thenReturn(getOptionalClientTemplat());
-        this.clienteServiceImpl.deleteClientById(ID);
-        verify(clientRepository, times(1)).getClient(anyString());
+        when(clientRepository.getProvider(anyString())).thenReturn(getOptionalClientTemplat());
+        this.clienteServiceImpl.deleteProviderById(ID);
+        verify(clientRepository, times(1)).getProvider(anyString());
         verify(clientSnsEvent, times(1)).deleteClient(any());
+    }
+
+    @Test
+    @DisplayName("Return list all Provider")
+    void listProvider() {
+        when(clientRepository.listProvider()).thenReturn(listAllProvider());
+        this.clienteServiceImpl.listProvider();
+        verify(clientRepository, times(1)).listProvider();
     }
 }

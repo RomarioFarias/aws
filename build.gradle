@@ -61,6 +61,7 @@ dependencies {
 	implementation 'org.modelmapper:modelmapper:3.1.0'
 
 	implementation 'org.projectlombok:lombok:1.18.24'
+	testImplementation 'org.junit.jupiter:junit-jupiter:5.8.1'
 	annotationProcessor 'org.projectlombok:lombok:1.18.24'
 
 	testCompileOnly 'org.projectlombok:lombok:1.18.24'

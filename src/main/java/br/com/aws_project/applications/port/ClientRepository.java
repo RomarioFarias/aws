@@ -3,11 +3,14 @@ package br.com.aws_project.applications.port;
 import br.com.aws_project.applications.entity.Provider;
 
 import java.util.Optional;
+import java.util.Set;
 
 public interface ClientRepository {
 
-    Provider createClient(Provider provider);
-    Optional<Provider> getClient(String id);
+    Provider createProvider(Provider Provider);
+    Optional<Provider> getProvider(String id);
 
-    void deleteClientById(Provider provider);
+    void deleteClientById(Provider Provider);
+
+    Set<Provider> listProvider();
 }
