@@ -25,29 +25,30 @@ public class ProviderServiceImpl implements ProviderService {
     private final ClientSnsEvent clientSnsEvent;
 
     @Override
-    public Provider createClient(Provider Provider) {
+    public Provider createProvider(Provider Provider) {
         Provider.setId(UUID.randomUUID().toString());
-        log.info("Create client by [ID={}]", Provider.getId());
+        log.info("Create provider by [ID={}]", Provider.getId());
         return clientRepository.createProvider(Provider);
     }
 
     @Override
-    public Provider getClient(String id) {
-        var client = clientRepository.getProvider(id).orElseThrow(() -> new ResourceNotFoundException(ExceptionCode.CLIENT_NOT_FOUND, id));
-        log.info("User client name: [name={}]", client.getName());
+    public Provider getProvider(String id) {
+        var client = clientRepository.getProvider(id).orElseThrow(() -> new ResourceNotFoundException(ExceptionCode.PROVIDER_NOT_FOUND, id));
+        log.info("Provider name: [name={}]", client.getName());
         return client;
     }
 
     @Override
-    public void deleteClientById(String id) {
-        var client = this.getClient(id);
-        log.info("Delete Client by [ID={}]", client.getId());
+    public void deleteProviderById(String id) {
+        var client = this.getProvider(id);
+        log.info("Delete Provider by [ID={}]", client.getId());
         clientRepository.deleteClientById(client);
         clientSnsEvent.deleteClient(new ProviderEvent(client.getId(), client.getName()));
     }
 
     @Override
-    public Set<Provider> listClients() {
-        return this.clientRepository.listClients();
+    public Set<Provider> listProvider() {
+        log.info("List all Providers");
+        return this.clientRepository.listProvider();
     }
 }

@@ -12,5 +12,5 @@ public interface ClientRepository {
 
     void deleteClientById(Provider Provider);
 
-    Set<Provider> listClients();
+    Set<Provider> listProvider();
 }

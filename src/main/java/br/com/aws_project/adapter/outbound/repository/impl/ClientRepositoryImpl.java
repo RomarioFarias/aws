@@ -17,8 +17,8 @@ public class ClientRepositoryImpl implements ClientRepository {
     private ClientMongoRepository clientMongoRepository;
 
     @Override
-    public Provider createProvider(Provider Provider) {
-        return clientMongoRepository.save(Provider);
+    public Provider createProvider(Provider provider) {
+        return clientMongoRepository.save(provider);
     }
 
     @Override
@@ -27,12 +27,12 @@ public class ClientRepositoryImpl implements ClientRepository {
     }
 
     @Override
-    public void deleteClientById(Provider Provider) {
-        clientMongoRepository.delete(Provider);
+    public void deleteClientById(Provider provider) {
+        clientMongoRepository.delete(provider);
     }
 
     @Override
-    public Set<Provider> listClients() {
+    public Set<Provider> listProvider() {
             return new HashSet<>(clientMongoRepository.findAll());
     }
 }

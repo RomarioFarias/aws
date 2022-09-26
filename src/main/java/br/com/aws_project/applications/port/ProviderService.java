@@ -5,11 +5,11 @@ import br.com.aws_project.applications.entity.Provider;
 import java.util.Set;
 
 public interface ProviderService {
-    Provider createClient(Provider Provider);
+    Provider createProvider(Provider Provider);
 
-    Provider getClient(String id);
+    Provider getProvider(String id);
 
-    void deleteClientById(String id);
+    void deleteProviderById(String id);
 
-    Set<Provider> listClients();
+    Set<Provider> listProvider();
 }

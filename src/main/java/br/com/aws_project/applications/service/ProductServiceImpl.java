@@ -53,6 +53,6 @@ public class ProductServiceImpl implements ProductService {
     }
 
     private void validProvider(String providerId) {
-        providerService.getClient(providerId);
+        providerService.getProvider(providerId);
     }
 }

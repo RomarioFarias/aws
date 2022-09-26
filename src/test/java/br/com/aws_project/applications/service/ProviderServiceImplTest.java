@@ -40,7 +40,7 @@ class ProviderServiceImplTest {
     @Test
     void createClient() {
         when(clientRepository.createProvider(any())).thenReturn(getClientTemplat());
-        var client = this.clienteServiceImpl.createClient(getClientTemplat());
+        var client = this.clienteServiceImpl.createProvider(getClientTemplat());
         assertTrue("client get by id is not null",client.getId() != null);
         verify(clientRepository, times(1)).createProvider(any());
     }
@@ -49,7 +49,7 @@ class ProviderServiceImplTest {
     @DisplayName("Return Client by ID")
     void getClient() {
         when(clientRepository.getProvider(any())).thenReturn(getOptionalClientTemplat());
-        var client = this.clienteServiceImpl.getClient(ID);
+        var client = this.clienteServiceImpl.getProvider(ID);
         assertNotNull("Test OK",client);
         verify(clientRepository, times(1)).getProvider(anyString());
     }
@@ -57,7 +57,7 @@ class ProviderServiceImplTest {
     @Test
     @DisplayName("Return ResourceNotFoundException im Client by ID")
     void sholdReturngetResourceNotFoundException() {
-        Throwable ex = assertThrows(Throwable.class, () -> clienteServiceImpl.getClient(ID));
+        Throwable ex = assertThrows(Throwable.class, () -> clienteServiceImpl.getProvider(ID));
         assertEquals(ex.getClass() ,ResourceNotFoundException.class);
         verify(clientRepository, times(1)).getProvider(anyString());
     }
@@ -66,8 +66,16 @@ class ProviderServiceImplTest {
     @DisplayName("Return delete Client by ID")
     void deleteClient() {
         when(clientRepository.getProvider(anyString())).thenReturn(getOptionalClientTemplat());
-        this.clienteServiceImpl.deleteClientById(ID);
+        this.clienteServiceImpl.deleteProviderById(ID);
         verify(clientRepository, times(1)).getProvider(anyString());
         verify(clientSnsEvent, times(1)).deleteClient(any());
+    }
+
+    @Test
+    @DisplayName("Return list all Provider")
+    void listProvider() {
+        when(clientRepository.listProvider()).thenReturn(listAllProvider());
+        this.clienteServiceImpl.listProvider();
+        verify(clientRepository, times(1)).listProvider();
     }
 }

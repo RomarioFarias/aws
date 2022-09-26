@@ -48,26 +48,26 @@ class ProviderControllerTest {
     @MockBean
     ProviderService providerService;
 
-    private final String URL = "/v1/clients";
+    private static final String URL = "/v1/clients";
 
 
     @Test
     void createClient() throws Exception {
         var client = ClientTemplatTest.getClientTemplat();
 
-        when(providerService.createClient(any())).thenReturn(ClientTemplatTest.getClientTemplat());
+        when(providerService.createProvider(any())).thenReturn(ClientTemplatTest.getClientTemplat());
         mockMvc.perform(post(URL)
                 .contentType(APPLICATION_JSON)
                 .content(JsonMapper.asJsonString(client)))
                 .andDo(print()).andExpect(status().isCreated())
                 .andExpect(jsonPath("$.email").value("JOAO@GMAIL.COM"));
 
-        verify(providerService, times(1)).createClient(any());
+        verify(providerService, times(1)).createProvider(any());
     }
 
     @Test
     void getClient() throws Exception {
-        when(providerService.getClient(any())).thenReturn(ClientTemplatTest.getClientTemplat());
+        when(providerService.getProvider(any())).thenReturn(ClientTemplatTest.getClientTemplat());
 
         mockMvc.perform(get("/v1/clients/{id}",1)
                 .contentType(APPLICATION_JSON))
@@ -85,6 +85,18 @@ class ProviderControllerTest {
                         .contentType(APPLICATION_JSON))
                 .andDo(print())
                 .andExpect(status().isNoContent());
+    }
+
+    @Test
+    void listAllProvider() throws Exception {
+        when(providerService.listProvider()).thenReturn(ClientTemplatTest.listAllProvider());
+
+        mockMvc.perform(get(URL)
+                .contentType(APPLICATION_JSON))
+                .andDo(print())
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$").isNotEmpty())
+                .andExpect(jsonPath("$.size()").isNotEmpty());
     }
 
 //
