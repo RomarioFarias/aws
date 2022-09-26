@@ -12,15 +12,15 @@ import java.util.stream.Collectors;
 public class ProviderModelMapper {
     private ModelMapper modelMapper;
 
-    public Provider toClient(ProviderDto clientDto) {
+    public Provider toProvider(ProviderDto clientDto) {
         return modelMapper.map(clientDto, Provider.class);
     }
 
-    public ProviderDto toClientDto(Provider Provider) {
+    public ProviderDto toProviderDto(Provider Provider) {
         return modelMapper.map(Provider, ProviderDto.class);
     }
 
     public Set<ProviderDto> toListProviderDto(Set<Provider> listProvider) {
-        return listProvider.stream().map(this::toClientDto).collect(Collectors.toSet());
+        return listProvider.stream().map(this::toProviderDto).collect(Collectors.toSet());
     }
 }

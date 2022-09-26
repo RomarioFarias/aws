@@ -20,28 +20,28 @@ public class ProviderController {
 
     @PostMapping()
     @ResponseStatus(HttpStatus.CREATED)
-    public ProviderDto createClient(@RequestBody @Valid ProviderDto providerDto) {
-        var provider = providerService.createProvider(providerModelMapper.toClient(providerDto));
-        return providerModelMapper.toClientDto(provider);
+    public ProviderDto createProvider(@RequestBody @Valid ProviderDto providerDto) {
+        var provider = providerService.createProvider(providerModelMapper.toProvider(providerDto));
+        return providerModelMapper.toProviderDto(provider);
     }
 
     @GetMapping("/{id}")
     @ResponseStatus(HttpStatus.OK)
     public ProviderDto getClient(@PathVariable String id) {
-        var client = providerService.getProvider(id);
-        return providerModelMapper.toClientDto(client);
+        var provider = providerService.getProvider(id);
+        return providerModelMapper.toProviderDto(provider);
     }
 
     @GetMapping()
     @ResponseStatus(HttpStatus.OK)
-    public Set<ProviderDto> listClients() {
-        var clients = providerService.listProvider();
-        return providerModelMapper.toListProviderDto(clients);
+    public Set<ProviderDto> listProvider() {
+        var listProvider = providerService.listProvider();
+        return providerModelMapper.toListProviderDto(listProvider);
     }
 
     @DeleteMapping("/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void deleteClientById(@PathVariable String id) {
+    public void deleteProviderById(@PathVariable String id) {
         providerService.deleteProviderById(id);
     }
 

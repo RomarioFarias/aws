@@ -7,6 +7,6 @@ import org.springframework.data.mongodb.repository.MongoRepository;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface ClientMongoRepository extends MongoRepository<Provider, String> {
-    Optional<Provider> findClientById(String id);
+public interface ProviderMongoRepository extends MongoRepository<Provider, String> {
+    Optional<Provider> findProviderById(String id);
 }
