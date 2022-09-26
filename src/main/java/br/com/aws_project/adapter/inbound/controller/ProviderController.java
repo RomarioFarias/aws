@@ -11,7 +11,7 @@ import javax.validation.Valid;
 import java.util.Set;
 
 @RestController
-@RequestMapping("/v1/clients")
+@RequestMapping("/v1/providers")
 @AllArgsConstructor
 public class ProviderController {
 
